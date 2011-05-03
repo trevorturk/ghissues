@@ -1,6 +1,9 @@
 require 'sinatra'
 require 'oauth2'
 
+ENV['GITHUB_ID'] ||= 'f549d1d79bdeb9bfe45f'
+ENV['GITHUB_SECRET'] ||= '93a94166fb94c42d53cb722e6d8440f27813b3cd'
+
 get '/' do
   redirect to('/auth/github')
 end
@@ -46,6 +49,6 @@ def redirect_uri(path = '/auth/github/callback', query = nil)
   uri = URI.parse(request.url)
   uri.path  = path
   uri.query = query
-  uri.scheme = 'https' if RACK_ENV == 'production'
+  uri.scheme = 'https' if ENV['RACK_ENV'] == 'production'
   uri.to_s
 end
