@@ -1,8 +1,7 @@
 require 'sinatra'
 require 'oauth2'
 
-ENV['GITHUB_ID'] ||= 'f549d1d79bdeb9bfe45f'
-ENV['GITHUB_SECRET'] ||= '93a94166fb94c42d53cb722e6d8440f27813b3cd'
+fail 'Missing ENV: GITHUB_ID & GITHUB_SECRET' unless ENV['GITHUB_ID'] && ENV['GITHUB_SECRET']
 
 get '/' do
   redirect to('/auth/github')
