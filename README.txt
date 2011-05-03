@@ -7,3 +7,7 @@ https://github.com/organizations/ORG_NAME/dashboard/pulls
 ...but not:
 
 https://github.com/organizations/ORG_NAME/dashboard/issues
+
+Use it here:
+
+https://ghissues.heroku.com/
