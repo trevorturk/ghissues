@@ -46,5 +46,6 @@ def redirect_uri(path = '/auth/github/callback', query = nil)
   uri = URI.parse(request.url)
   uri.path  = path
   uri.query = query
+  uri.scheme = 'https' if RACK_ENV == 'production'
   uri.to_s
 end
