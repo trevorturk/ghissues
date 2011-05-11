@@ -1,7 +1,10 @@
+fail 'Missing ENV: GITHUB_ID & GITHUB_SECRET' unless ENV['GITHUB_ID'] && ENV['GITHUB_SECRET']
+
 require 'sinatra'
+require 'erubis'
 require 'oauth2'
 
-fail 'Missing ENV: GITHUB_ID & GITHUB_SECRET' unless ENV['GITHUB_ID'] && ENV['GITHUB_SECRET']
+set :erubis, :escape_html => true
 
 get '/' do
   redirect to('/auth/github')
@@ -14,26 +17,20 @@ end
 get '/auth/github/callback' do
   begin
     token = oauth2.web_server.get_access_token(params[:code], :redirect_uri => redirect_uri)
-    repos = token.get('/api/v2/json/organizations/repositories?owned=1')['repositories']
-    repos = repos.select { |repo| repo['private'] }
-    repos = repos.sort_by { |repo| [-repo['open_issues'], repo['name']] }
-    html = '<ul>'
-    repos.each do |repo|
-      html << "<li><a href='#{repo['url']}/issues'>#{repo['name']}</a> (#{repo['open_issues']})</li>"
-      if repo['open_issues'] > 0
-        name = repo['url'].gsub('https://github.com/', '')
-        issues = token.get("/api/v2/json/issues/list/#{name}/open")['issues']
-        html << '<ul>'
-        issues.each do |issue|
-          html << "<li><a href='#{issue['html_url']}'>#{issue['title']}</a></li>"
-        end
-        html << '</ul>'
-      end
-    end
-    html << '</ul>'
+    @repos = token.get('/api/v2/json/organizations/repositories?owned=1')['repositories']
   rescue OAuth2::AccessDenied
     redirect to('/auth/github')
   end
+    @repos = @repos.select { |repo| repo['private'] }
+    @repos = @repos.sort_by { |repo| [-repo['open_issues'], repo['name']] }
+    @repos.each do |repo|
+      if repo['open_issues'] > 0
+        name = repo['url'].gsub('https://github.com/', '')
+        issues = token.get("/api/v2/json/issues/list/#{name}/open")['issues']
+        repo['issues'] = issues
+      end
+    end
+  erubis :index
 end
 
 def oauth2

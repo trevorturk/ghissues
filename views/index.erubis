@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<title>ghissues</title>
+</head>
+<body>
+	<h1>ghissues</h1>
+	<ul>
+		<% @repos.each do |repo| %>
+	  	<li><a href="<%= repo['url'] %>/issues"><%= repo['name'] %></a> (<%= repo['open_issues'] %>)</li>
+	  	<% if repo['open_issues'] > 0 %>
+	    	<ul>
+	    		<% repo['issues'].each do |issue| %>
+	      		<li><a href="<%= issue['html_url'] %>"><%= issue['title'] %></a></li>
+	    		<% end %>
+	    	</ul>
+			<% end %>
+		<% end %>
+	</ul>
+</body>
+</html>
