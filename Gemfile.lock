@@ -1,14 +1,7 @@
 GIT
-  remote: https://github.com/intridea/oauth2.git
-  revision: ebe4be038ec14b3496827d29cb224235e1c9f468
-  specs:
-    oauth2 (0.4.1)
-      faraday (>= 0.6.1, < 0.8)
-      multi_json (~> 1.0.0)
-
-GIT
-  remote: https://github.com/intridea/omniauth.git
-  revision: 440185157ae92954c1875dfcb514306099576138
+  remote: git://github.com/trevorturk/omniauth.git
+  revision: d7ea3cfc5cdfe76ba041ed457a80f4b0b7204815
+  ref: integration
   specs:
     oa-basic (0.2.5)
       oa-core (= 0.2.5)
@@ -43,6 +36,14 @@ GIT
       oa-more (= 0.2.5)
       oa-oauth (= 0.2.5)
       oa-openid (= 0.2.5)
+
+GIT
+  remote: https://github.com/intridea/oauth2.git
+  revision: ebe4be038ec14b3496827d29cb224235e1c9f468
+  specs:
+    oauth2 (0.4.1)
+      faraday (>= 0.6.1, < 0.8)
+      multi_json (~> 1.0.0)
 
 GEM
   remote: http://rubygems.org/
