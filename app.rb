@@ -21,15 +21,15 @@ get '/auth/github/callback' do
   rescue OAuth2::AccessDenied
     redirect to('/auth/github')
   end
-    @repos = @repos.select { |repo| repo['private'] }
-    @repos = @repos.sort_by { |repo| [-repo['open_issues'], repo['name']] }
-    @repos.each do |repo|
-      if repo['open_issues'] > 0
-        name = repo['url'].gsub('https://github.com/', '')
-        issues = token.get("/api/v2/json/issues/list/#{name}/open")['issues']
-        repo['issues'] = issues
-      end
+  @repos = @repos.select { |repo| repo['private'] }
+  @repos = @repos.sort_by { |repo| [-repo['open_issues'], repo['name']] }
+  @repos.each do |repo|
+    if repo['open_issues'] > 0
+      name = repo['url'].gsub('https://github.com/', '')
+      issues = token.get("/api/v2/json/issues/list/#{name}/open")['issues']
+      repo['issues'] = issues
     end
+  end
   erubis :index
 end
 
