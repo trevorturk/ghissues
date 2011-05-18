@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/intridea/oauth2.git
-  revision: 5493f202096881ed7deee2a89075a293fad4ad88
+  revision: ebe4be038ec14b3496827d29cb224235e1c9f468
   specs:
     oauth2 (0.4.1)
       faraday (>= 0.6.1, < 0.8)
